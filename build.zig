@@ -29,6 +29,15 @@ pub fn build(b: *std.build.Builder) void {
     exe.inner.want_lto = false;
 
     exe.installArtifact(b);
+
+    var exe2 = microzig.addEmbeddedExecutable(b, .{
+        .name = "bug2-2",
+        .source_file = .{ .path = "src/main2.zig" },
+        .optimize = optimize,
+        .backing = .{ .chip = stm32l011f3px },
+    });
+
+    exe2.installArtifact(b);
 }
 
 fn root() []const u8 {
